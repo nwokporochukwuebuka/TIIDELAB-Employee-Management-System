@@ -8,7 +8,6 @@ const organizationSchema = mongoose.Schema(
       ref: 'User',
       required: true,
     },
-
     organizationCode: {
       type: String,
     },
@@ -16,6 +15,9 @@ const organizationSchema = mongoose.Schema(
       type: Number,
     },
     numberOfRewardsGenerated: {
+      type: Number,
+    },
+    numberOfRewardsRedeemed: {
       type: Number,
     },
   },

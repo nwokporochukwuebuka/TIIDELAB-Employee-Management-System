@@ -36,9 +36,7 @@ const rewardSchema = mongoose.Schema(
       type: String,
       required: false,
     },
-    rewardCode: {
-      type: String,
-    },
+
     recipientId: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',

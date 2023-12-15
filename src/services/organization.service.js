@@ -22,9 +22,21 @@ const fetchOrganizationByCode = async (code) => {
   return await Organization.findOne({ organizationCode: code });
 };
 
+const updateOrganization = async (id, updateBody) => {
+  const organization = await fetchOrganizationById(id);
+
+  if (!organization) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Organization not found');
+  }
+  Object.assign(organization, updateBody);
+  await organization.save();
+  return organization;
+};
+
 module.exports = {
   createOrganization,
   fetchOrganizationById,
   fetchOrganizationByCode,
   fetchOrganizationByUserId,
+  updateOrganization,
 };

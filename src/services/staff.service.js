@@ -10,4 +10,20 @@ const getStaffByUserId = async (id) => {
   return await Staff.findOne({ userId: id });
 };
 
-module.exports = { createStaff, getStaffByUserId };
+const getStaffById = async (id) => {
+  return await Staff.findById(id);
+};
+
+const updateStaff = async (staffId, updateBody) => {
+  const staff = await getStaffById(staffId);
+
+  if (!staff) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Staff not found');
+  }
+
+  Object.assign(staff, updateBody);
+  await staff.save();
+  return staff;
+};
+
+module.exports = { createStaff, getStaffByUserId, updateStaff, getStaffById };

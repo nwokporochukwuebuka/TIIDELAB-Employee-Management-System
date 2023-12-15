@@ -1,5 +1,5 @@
 const allRoles = {
-  staff: [],
+  staff: ['staff'],
   organization: ['getUsers', 'manageUsers'],
 };
 

@@ -14,6 +14,9 @@ const staffSchema = mongoose.Schema(
     rewardsReceived: {
       type: Number,
     },
+    rewardsTransferred: {
+      type: Number,
+    },
     rewardsRedeemed: {
       type: Number,
     },

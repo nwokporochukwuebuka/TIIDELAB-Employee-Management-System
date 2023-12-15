@@ -24,7 +24,13 @@ const register = catchAsync(async (req, res) => {
       role: 'organization',
     });
 
-    const organization = await organizationService.createOrganization({ userId: user.id, organizationCode: req.body.code });
+    const organization = await organizationService.createOrganization({
+      userId: user.id,
+      organizationCode: req.body.code,
+      numberOfEmployees: 0,
+      numberOfRewardsGenerated: 0,
+      numberOfRewardsRedeemed: 0,
+    });
     const tokens = await tokenService.generateAuthTokens(user);
     return res.status(httpStatus.CREATED).send({ user, tokens, organization });
   } else if (req.body.role === 'staff') {
@@ -48,11 +54,24 @@ const register = catchAsync(async (req, res) => {
       userId: user.id,
       organizationId: organization._id,
       organizationCode: req.body.code,
+      rewardsReceived: 0,
+      rewardsTransferred: 0,
+      rewardsRedeemed: 0,
     });
+
+    let updatedOrganization;
+    if (staff) {
+      // update staff information
+      console.log(organization.numberOfEmployees);
+      console.log(typeof organization.numberOfEmployees);
+      updatedOrganization = await organizationService.updateOrganization(organization.id, {
+        numberOfEmployees: +organization.numberOfEmployees + 1,
+      });
+    }
 
     const tokens = await tokenService.generateAuthTokens(user);
 
-    return res.status(httpStatus.CREATED).send({ user, staff, organization, tokens });
+    return res.status(httpStatus.CREATED).send({ user, staff, updatedOrganization, tokens });
   }
 });
 
