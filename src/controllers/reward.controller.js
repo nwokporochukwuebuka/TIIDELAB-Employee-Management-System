@@ -84,13 +84,13 @@ const bulkGenerateReward = catchAsync(async (req, res) => {
 const transferReward = catchAsync(async (req, res) => {
   const reward = await rewarderServices.fetchRewardById(req.params.rewardId);
   if (!reward) {
-    return res.status(httpStatus.NOT_FOUND).send({ status: false, message: 'Reward does not exist' });
+    return res.status(httpStatus.NOT_FOUND).send({ status: false, message: 'User does not have a reward' });
   }
   if (reward.status === rewardStatus.REDEEMED || reward.status === rewardStatus.TRANSFERRED) {
     return res.status(400).send({ status: false, message: `This reward has been ${reward.status} already` });
   }
   const user = await userService.getUserById(req.body.userId);
-  const staff = await staffService.getStaffByUserId(req.user.id);
+  const staff = await staffService.getStaffByUserId(req.user.id); // this is the rewarder
 
   // this is showing that the ereward has been transferred, so we will have to create a new one
   const updateReward = await rewarderServices.updateRewardStatus(reward.organizationId, req.user.id, reward.rewardCode, {

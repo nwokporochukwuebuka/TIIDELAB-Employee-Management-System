@@ -39,6 +39,7 @@ const register = catchAsync(async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       role: 'staff',
+      code: req.body.code,
     });
 
     const organization = await organizationService.fetchOrganizationByCode(req.body.code);
