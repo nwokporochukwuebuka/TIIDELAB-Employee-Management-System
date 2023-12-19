@@ -22,6 +22,7 @@ const register = catchAsync(async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       role: 'organization',
+      code: req.body.code,
     });
 
     const organization = await organizationService.createOrganization({
