@@ -16,13 +16,13 @@ function generateAlphanumericCode(length) {
 
 const register = catchAsync(async (req, res) => {
   if (req.body.role === 'organization') {
-    req.body.code = generateAlphanumericCode(6);
+    const code = generateAlphanumericCode(6);
     const user = await userService.createUser({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
       role: 'organization',
-      code: req.body.code,
+      code: code,
     });
 
     const organization = await organizationService.createOrganization({
