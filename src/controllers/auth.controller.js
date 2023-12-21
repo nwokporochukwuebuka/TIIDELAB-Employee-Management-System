@@ -27,7 +27,7 @@ const register = catchAsync(async (req, res) => {
 
     const organization = await organizationService.createOrganization({
       userId: user.id,
-      organizationCode: req.body.code,
+      organizationCode: code,
       numberOfEmployees: 0,
       numberOfRewardsGenerated: 0,
       numberOfRewardsRedeemed: 0,
